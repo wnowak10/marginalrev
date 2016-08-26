@@ -103,9 +103,9 @@ def writenewrowstocsv(features):
 		pass
 
 
-years=[2013,2014,2015,2016] #years
-months=range(12) # number of months
-pagesPerMonth=range(10) #how many pages per month? this is upper limit of what i scrape. just set really high
+years=[2016] #years
+months=range(1) # number of months
+pagesPerMonth=range(2) #how many pages per month? this is upper limit of what i scrape. just set really high
 
 
 #this takes a while. run when i have better internet? it works for ~10 pages here (20 seconds) in ludwig bar, but more than that stresses out
