@@ -15,7 +15,7 @@ with open("/Users/wnowak/Desktop/testing.csv", 'a') as f: #use a for append. imp
 # key functions
 def getLink(i,j,k):
 	baselink="http://marginalrevolution.com/marginalrevolution/"
-	return baselink+str(i)+"/"+str(j)+"/page"+str(k)
+	return baselink+str(i)+"/"+str(j)+"/"+str(k)# year / month / day
 
 def makesoup(link):
 	site=link
@@ -104,15 +104,25 @@ def writenewrowstocsv(features):
 
 
 years=[2016] #years
-months=range(1) # number of months
-pagesPerMonth=range(2) #how many pages per month? this is upper limit of what i scrape. just set really high
+months=range(2) # number of months
 
+# need to roll through different number of days per month so i dont reload posts
+twentyNineDayMonths=range(28)
+thirtyDayMonths=range(30)
+thiryOneDayMonths=range(31)
 
-#this takes a while. run when i have better internet? it works for ~10 pages here (20 seconds) in ludwig bar, but more than that stresses out
 for i in years:
 	for j in months:
-		for k in pagesPerMonth:
- 			writenewrowstocsv(scrape(makesoup(getLink(i,j+1,k+1))))
+		if j+1 in [1,3,5,7,8,12]:
+			for k in thiryOneDayMonths:
+ 				writenewrowstocsv(scrape(makesoup(getLink(i,j+1,k+1))))
+ 			print 'just did january'
+ 		elif j+1 in [4,6,9,11]:
+			for k in thirtyDayMonths:
+				writenewrowstocsv(scrape(makesoup(getLink(i,j+1,k+1))))
+		elif j+1 in [2]:
+			for k in twentyNineDayMonths:
+				writenewrowstocsv(scrape(makesoup(getLink(i,j+1,k+1))))
 	
 
 
