@@ -103,8 +103,8 @@ def writenewrowstocsv(features):
 		pass
 
 
-years=[2016] #years
-months=range(2) # number of months
+years=[2015,2016] #years
+months=range(12) # number of months
 
 # need to roll through different number of days per month so i dont reload posts
 twentyNineDayMonths=range(28)
