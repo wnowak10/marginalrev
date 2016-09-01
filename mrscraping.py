@@ -103,7 +103,7 @@ def writenewrowstocsv(features):
 		pass
 
 
-years=[2015,2016] #years
+years=[2010,2011,2012,2013,2014,2015,2016] #years
 months=range(12) # number of months
 
 # need to roll through different number of days per month so i dont reload posts
@@ -113,10 +113,9 @@ thiryOneDayMonths=range(31)
 
 for i in years:
 	for j in months:
-		if j+1 in [1,3,5,7,8,12]:
+		if j+1 in [1,3,5,7,8,10,12]:
 			for k in thiryOneDayMonths:
  				writenewrowstocsv(scrape(makesoup(getLink(i,j+1,k+1))))
- 			print 'just did january'
  		elif j+1 in [4,6,9,11]:
 			for k in thirtyDayMonths:
 				writenewrowstocsv(scrape(makesoup(getLink(i,j+1,k+1))))
