@@ -1,6 +1,7 @@
 testing <- read.csv("~/gittt/marginalrev/cleanedmrdata.csv", comment.char="#")
 
-
+str(testing)
+summary(testing)
 ####### ####### ####### ####### 
 ####### ####### ####### ####### 
 ####### ####### ####### ####### 
@@ -51,7 +52,7 @@ hist(testing$numberofWords)
 
 # distribution of post word count
 ggplot(testing, aes(testing$numberofWords,colour=testing$author,fill=testing$author)) +
-  geom_density(alpha=.1)+
+  geom_density(alpha=.3)+
   geom_vline(xintercept = mean(testing$numberofWords,na.rm=T))+
   labs(title = "Distribution of post word count")+
   xlab('Word count')+
@@ -60,7 +61,7 @@ ggplot(testing, aes(testing$numberofWords,colour=testing$author,fill=testing$aut
 
 # word count over time plot
 ggplot(testing, aes(testing$time,testing$numberofWords,colour=testing$author))+
-  geom_point()+
+  geom_point(alpha=.3)+
   xlab('Date')+
   ylab('Word Count')+
   labs(title="Word Count over Time")
@@ -87,8 +88,8 @@ summary(x)
 
 # boxplot comparing # of comments/ 114 NA in comments
 sum(is.na(testing$numberComments)) # boxplot still runs tho
-ggplot(testing, aes(testing$author, testing$numberComments,fill = testing$author))+
-  geom_boxplot()+
+ggplot(testing, aes(testing$author, testing$numberComments))+
+  geom_boxplot(fill = testing$author)+
   xlab('Author')+
   ylab('Comment Count')+
   labs(title="Tabarrok posts receive more ~2 more comments, on average")
@@ -140,22 +141,21 @@ par(mfrow=c(1,1))
 
 
 
-sum(is.na(testing$numberofWords))
 # looks good. lets replace
 testing$numberComments<- mice_output$numberComments
-# no more NAs!
-sum(is.na(testing$numberComments))
 testing$numberofWords = mice_output$numberofWords
-sum(is.na(testing$numberofWords))
+
 
 sum(is.na(testing))
 # still have 3 NAs. just get rid of rows
 testing=na.omit(testing)
 
+
 # split into testing and training data
 # shuffle and then split 80/20 
 # shuffle to as to get rid of any time effects.
 full = testing[sample(nrow(testing)),]
+full=na.omit((full))
 nrow(full)
 #find 20 percent
 tesnum=floor(.2*nrow(full))
@@ -163,6 +163,15 @@ test <- full[1:tesnum,]
 train <- full[(tesnum+1):nrow(full),]
 
 set.seed(754)
+sum(is.na(full))
+ # without date
+rf_model <- randomForest(factor(author) ~ numberComments + numberofWords + 
+                           CurrentAffairs + Education + Music + 
+                           Philosophy + PoliticalScience + Science+
+                           History + Law + Games + Books + FoodandDrink+
+                           DataSource + WebTech,
+                         data = train)
+# with date, but r interpreting as many categories so not working
 
 rf_model <- randomForest(factor(author) ~ time + numberComments + numberofWords + 
                            CurrentAffairs + Education + Music + 
@@ -170,7 +179,7 @@ rf_model <- randomForest(factor(author) ~ time + numberComments + numberofWords 
                            History + Law + Games + Books + FoodandDrink+
                            DataSource + WebTech,
                          data = train)
-
+summary(full)
 # Show model error
 plot(rf_model, ylim=c(0,1))
 rf_model
