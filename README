@@ -2,3 +2,12 @@ this project crawls MR.com and finds word count and other key data for MR posts
 
 
 see https://medium.com/@williampnowak/how-to-blog-dc5d16c77e97#.jm62prllo for more details
+
+key functions
+- getLink for url with posts (by calendar day)
+- makeup — using beautiful soup library to “make soup”
+- scrape. this function uses BS library to parse soup. for each day/soup (soup is made fresh daily!), the scrape function parses the soup and pulls out all data of interest (author name, time…). data is added to list, which is then zipped into an array.  this function returns a zipped array
+- write to cvs. rows are written for each post
+
+
+ 
