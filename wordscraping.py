@@ -39,7 +39,7 @@ postThree=today.find_all('div', {'class' : 'pf-content'})[2]
 # this function looks through a given post's soup and finds block quoted material
 ## function returns a list of block quoted material, with each entry a <p> tag
 def findquotes(post): 
-	Bqsptags=[]
+	Bqsptags=[] # this is where quoted <p>s go 
 	for i in range(len(post.find_all('blockquote'))): #how many block quotes are there in post?
 		x= post.find_all('blockquote')[i] #set aside a given block quote (x)
 		for j in range(len(x.find_all('p'))): # find all the <p> tags
