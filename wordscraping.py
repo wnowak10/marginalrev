@@ -72,7 +72,31 @@ def findauthoredwords(post,quotelist):
 	return words #reutn list of <p> tags
 
 
-print findauthoredwords(postThree,findquotes(postThree))# this is first paragraph
+# print findauthoredwords(postThree,findquotes(postThree))# this is first paragraph
+
+
+# test to see if i can successfully scrape posts for multiple days
+# loop through all posts of given day
+
+
+years=[2015] #years
+months=range(1) # number of months
+days = range(2) # number of days
+dailycontent=[]
+for i in days: # loop through days
+	day=makesoup(getLink(2015,1,i+1))
+	postcontent=[]
+	for j in range(len(day.find_all('div', {'class' : 'pf-content'}))):
+		post=day.find_all('div', {'class' : 'pf-content'})[j]
+		quotes=findquotes(post)
+		postcontent.append(findauthoredwords(post,quotes))
+	dailycontent.append(postcontent)
+
+
+print dailycontent[0][0] # this prints content from post 0 from day 0 in above loop!
+
+
+
 
 
 
