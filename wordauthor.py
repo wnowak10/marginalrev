@@ -112,22 +112,14 @@ for i in days: # loop through days
 	df = pd.concat([df,oneDay],ignore_index=True) #ignore index so that we have non-repeating indices
 
 
-# r=range(df.shape[0])
-# df = df.reindex(r)
 
-print df 
+print df.shape
 
 print df.columns.values
 
 print df['text'][0]
 
-
-# day=makesoup(getLink(2015,1,1))
-# x= day.find_all('span',class_='meta_author_name')[1] # this will be j above
-# y=str(x)
-# z=BeautifulSoup(y,"html5lib")
-
-# print z.a.contents
+df.to_csv('out.csv') # export for kicks
 
 
 
