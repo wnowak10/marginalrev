@@ -69,8 +69,12 @@ def findauthoredwords(post,quotelist):
 				words.append(post.find_all('p')[i]) #add to words list
 		except:
 			words.append(post.find_all('p')[i]) # if no blockquote in post, just throw all <p> tags in 
-	return words #reutn list of <p> tags
+	return str(words) #return string list of <p> tags
 
+def getposttext(stri):
+	beautySoup=BeautifulSoup(stri,"html5lib")
+	postText=beautySoup.get_text()
+	return postText
 
 # print findauthoredwords(postThree,findquotes(postThree))# this is first paragraph
 
@@ -79,24 +83,37 @@ def findauthoredwords(post,quotelist):
 # loop through all posts of given day
 
 
+def findNumberofLinks(stri):
+	beautySoup=BeautifulSoup(stri,"html5lib")
+	numbofLks=len(beautySoup.find_all("a"))
+	return numbofLks
+
 years=[2015] #years
 months=range(1) # number of months
 days = range(2) # number of days
-dailycontent=[]
+dailycontent=[] # to be filled with words
+lnkNo=[] # to be filled with # of links
 for i in days: # loop through days
 	day=makesoup(getLink(2015,1,i+1))
 	postcontent=[]
+	numberofLinks=[]
 	for j in range(len(day.find_all('div', {'class' : 'pf-content'}))):
 		post=day.find_all('div', {'class' : 'pf-content'})[j]
 		quotes=findquotes(post)
-		postcontent.append(findauthoredwords(post,quotes))
+		postcontent.append(getposttext(findauthoredwords(post,quotes)))
+		numberofLinks.append(findNumberofLinks(findauthoredwords(post,quotes)))
 	dailycontent.append(postcontent)
+	lnkNo.append(numberofLinks)
 
 
-print dailycontent[0][0] # this prints content from post 0 from day 0 in above loop!
+print dailycontent[0][0] #this prints content from post 0 from day 0 in above loop!
+print lnkNo[0][0] # this prints # of links in that post. potentially a useful feature
+# so for these lists, first subscript is for day of post, and second is for post of that day
 
 
-
+# to do 
+# put into pandas data frame. i want a row per post that says date and post content and # links
+# 3 columns, as many rows as posts
 
 
 
