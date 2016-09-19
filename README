@@ -8,10 +8,13 @@ http://marginalrevolution.com/marginalrevolution/2016/09/toward-theory-marginal-
 see https://medium.com/@williampnowak/how-to-blog-dc5d16c77e97#.jm62prllo for more details
 
 workflow:
-0. use working.py to create day object with class functions
+0. use working.py to create day object with class functions. urllib2 is used to load pages and beautifulsoup is used create 'soup'.
+
 1. loop through days and instantiate day object for each day. call function for each post of the day. export to csv.
 >> major lessons: objects help simplify. fully understanding BS library is great help to scraping efficiently. placing try and except statements helps code from crashing.
-2. use R to clean and then export a clean CSV file
+
+2. use R to clean and then export a clean CSV file. regex gsub function often used to delete extraneous characters
+
 3. do analysis. 
 >> major lessons: dealing with date times is a pain. lubridate library seems promising but doesn’t seem to work with Kaggle. 
 
